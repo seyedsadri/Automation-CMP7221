@@ -1,0 +1,33 @@
+
+---
+  - name: playbook
+    hosts: R1
+    gather_facts: false
+    connection: local
+    tasks:
+# Configuring EIGRP Routing Protocol version 4
+      - name: EIGRP Routing protocol version 4 
+        ios_config:
+          commands:
+            - ip routing
+            - router eigrp 100
+            - eigrp router-id 1.1.1.1
+            - network 192.168.1.0 0.0.0.255
+            - network 192.168.2.0 0.0.0.3
+            - network 192.168.6.0 0.0.0.255
+            - do write
+# Configuring EIGRP Routing Protocol version 6
+      - name: EIGRP Routing protocol version 6
+        ios_config:
+          commands:
+            - ipv6 router eigrp 100
+            - eigrp router-id 1.1.1.1
+            - interface fastethernet 0/0
+            - ipv6 eigrp 100
+            - interface loopback 0   
+            - ipv6 eigrp 100
+            - interface fastethernet 1/0   
+            - ipv6 eigrp 100
+            - do write
+
+ 

@@ -1,0 +1,31 @@
+
+---
+  - name: playbook
+    hosts: R3
+    gather_facts: false
+    connection: local
+    tasks:
+      - name: Configure IPv6
+        ios_config:
+          commands:
+            - ipv6 unicast-routing
+      - name: Assign IP address version 4 & 6
+        ios_config:
+          commands:
+# Assign IPv4, v6 & link-local on interface loopback 0
+            - interface loopback0
+            - ip address 192.168.5.1 255.255.255.0
+            - ipv6 address 2001:db8:cafe:5::1/64
+            - ipv6 address fe80::3 link-local
+            - ipv6 ospf 200 area 0
+# Assign IPv4, v6 & link-local on interface fastethernet 0/0
+            - interface fastEthernet 0/0
+            - ipv6 address 2001:db8:cafe:4::2/64
+            - ipv6 address fe80::3 link-local
+
+# Assign IPv4, v6 & link-local on interface fastethernet 0/1
+            - interface fastEthernet 1/0
+            - no shutdown
+            - ip address 192.168.77.2 255.255.255.0
+            - ipv6 address 2001:db8:feed:77::2/64
+            - do write

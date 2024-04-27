@@ -1,0 +1,16 @@
+
+
+---
+  - name: playbook
+    hosts: R3
+    gather_facts: false
+    connection: local
+    tasks:
+      - name: Default-Information Originate
+        ios_config:
+          commands:
+            - router ospf 200
+            - router-id 3.3.3.3
+            - network 192.168.5.0 0.0.0.255 area 0
+            - network 192.168.4.0 0.0.0.3 area 0
+            - default-information originate always
