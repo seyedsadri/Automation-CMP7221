@@ -17,6 +17,6 @@
         ios_config:
           commands:
             - router ospf 200
-            - redistribute bgp 65000 subnets
+#            - redistribute bgp 65000 subnets
             - do write
 
